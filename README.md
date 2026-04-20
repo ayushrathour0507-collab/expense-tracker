@@ -7,7 +7,7 @@ A complete full-stack expense tracking application built with FastAPI (backend) 
 ### Authentication
 - ✅ User Registration
 - ✅ User Login with JWT tokens
-- ✅ Secure password hashing with bcrypt
+- ✅ Secure password hashing with Argon2
 - ✅ Token-based authorization
 
 ### Expense Management
@@ -16,6 +16,51 @@ A complete full-stack expense tracking application built with FastAPI (backend) 
 - ✅ Delete expenses
 - ✅ View expense summary by category
 - ✅ Responsive design with Tailwind CSS
+
+## 🚀 Deployment
+
+### Backend (Railway)
+
+1. Connect your GitHub repo to Railway
+2. Set environment variables:
+   - `DATABASE_URL`: Your Supabase connection string (use pooler URL)
+   - `JWT_SECRET`: Random string (e.g., `openssl rand -hex 32`)
+   - `ALLOWED_ORIGINS`: Your Vercel frontend URL (e.g., `https://your-app.vercel.app`)
+3. Deploy
+
+### Frontend (Vercel)
+
+1. Connect your GitHub repo to Vercel
+2. Set environment variable:
+   - `VITE_API_BASE_URL`: Your Railway backend URL
+3. Deploy
+
+## 🔧 Troubleshooting
+
+### Registration Issues
+
+1. **Check health endpoint**: Visit `https://your-railway-backend/health` to verify:
+   - Database connection: should show "connected"
+   - JWT_SECRET: should be `true`
+   - ALLOWED_ORIGINS: should include your Vercel URL
+
+2. **Check environment variables** in Railway:
+   - `DATABASE_URL` must be set and valid
+   - `JWT_SECRET` must be a long random string
+   - `ALLOWED_ORIGINS` must include your frontend URL
+
+3. **Check Railway logs** for errors:
+   - Database connection failures
+   - Missing dependencies
+   - Startup errors
+
+4. **CORS issues**: Ensure `ALLOWED_ORIGINS` includes your Vercel domain
+
+### Database Issues
+
+- Use Supabase **pooler URL** for Railway deployment
+- Ensure SSL mode is set to `require`
+- Check database permissions and connection limits
 
 ## 📋 Project Structure
 

@@ -38,6 +38,29 @@ def root():
     return {"message": "Expense Tracker API", "docs": "/docs"}
 
 
+@app.get("/health")
+def health_check():
+    """Health check endpoint to verify database connection and environment."""
+    try:
+        from database import SessionLocal
+        db = SessionLocal()
+        db.execute("SELECT 1")
+        db.close()
+        return {
+            "status": "healthy",
+            "database": "connected",
+            "jwt_secret": bool(os.getenv("JWT_SECRET")),
+            "allowed_origins": allowed_origins
+        }
+    except Exception as e:
+        return {
+            "status": "unhealthy",
+            "database": f"error: {str(e)}",
+            "jwt_secret": bool(os.getenv("JWT_SECRET")),
+            "allowed_origins": allowed_origins
+        }
+
+
 app.include_router(auth_router)
 app.include_router(expense_router)
 
